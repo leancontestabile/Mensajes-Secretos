@@ -13,7 +13,6 @@ def cifrado_atbash(cadena):
             lista_caracteres.append(numeros[numeros_invertidos.index(letra)])
         elif letra not in letras_minuscula:
             lista_caracteres.append(letra)
-            
     nueva_cadena = "".join(lista_caracteres)
     print(nueva_cadena)
 

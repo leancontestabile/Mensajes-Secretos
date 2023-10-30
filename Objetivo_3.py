@@ -1,5 +1,5 @@
 from tkinter import *
-
+from Integración import boton_cifrado_cesar, boton_descifrado_cesar 
 
 def interfazInicial():
     raiz = Tk()
@@ -41,6 +41,12 @@ def interfazContinuar():
     
     labelClave = Label(miFrame,font=('Courier',12),bg="#9ED8F9",text="Ingrese Clave en caso de César:")
     labelClave.grid(row=1,column=0,padx=5,pady=10)
+
+    cifrado = Label(miFrame,font=('Courier',12), bg="#9ED8F9", text="")
+    cifrado.grid(row=2, column=0, columnspan=2, padx=5, pady=10)
+
+    descifrado = Label(miFrame,font=('Courier',12), bg="#9ED8F9", text="")
+    descifrado.grid(row=2, column=0, columnspan=2, padx=5, pady=10) 
     
     inputMensaje=Entry(miFrame)
     inputMensaje.grid(row=0,column=1,padx=10)
@@ -51,10 +57,10 @@ def interfazContinuar():
     frameBotones = Frame(raiz, bg="#9ED8F9")
     frameBotones.pack(pady=15)
 
-    botonCifrarCesar = Button(frameBotones,text="Cifrar César", bg="#D5CF13")
+    botonCifrarCesar = Button(frameBotones,text="Cifrar César", bg="#D5CF13", command=lambda: boton_cifrado_cesar(inputMensaje, inputClave, cifrado))
     botonCifrarCesar.grid(row=0,column=0, padx=5)
     
-    botonDescifrarCesar = Button(frameBotones,text="Descifrar César",bg="#D5CF13")
+    botonDescifrarCesar = Button(frameBotones,text="Descifrar César",bg="#D5CF13", command:lambda: boton_descifrado_cesar(inputMensaje, inputClave, descifrado))
     botonDescifrarCesar.grid(row=0,column=1, padx=5)
     
     botonCifrarAtbash = Button(frameBotones,text="Cifrar Atbash",bg="#D5CF13")

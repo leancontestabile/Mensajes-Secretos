@@ -72,18 +72,18 @@ def cifrado_cesar(mensaje, clave):
     mensaje_a_analizar = normalizar_mensaje(mensaje)
     for caracter in mensaje_a_analizar:
         
-        if caracter_a_analizar.isalpha():
+        if caracter.isalpha():
 
-            if caracter_a_analizar.islower():  
-                nuevo_caracter = chr(ord("a") + ((ord(caracter_a_analizar)- ord("a")+clave) % LONGITUD_ALFABETO))  
+            if caracter.islower():  
+                nuevo_caracter = chr(ord("a") + ((ord(caracter)- ord("a")+clave) % LONGITUD_ALFABETO))  
             else:
-                nuevo_caracter = chr(ord("A") + ((ord(caracter_a_analizar)- ord("A")+clave) % LONGITUD_ALFABETO))  
+                nuevo_caracter = chr(ord("A") + ((ord(caracter)- ord("A")+clave) % LONGITUD_ALFABETO))  
 
-        elif caracter_a_analizar.isnumeric():
-            nuevo_caracter = str((int(caracter_a_analizar)+clave)%LONGITUD_NUMEROS)
+        elif caracter.isnumeric():
+            nuevo_caracter = str((int(caracter)+clave)%LONGITUD_NUMEROS)
             
         else:
-            nuevo_caracter = caracter_a_analizar
+            nuevo_caracter = caracter
 
         mensaje_cifrado += nuevo_caracter
 

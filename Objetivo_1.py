@@ -1,19 +1,26 @@
 
 
-def normalizar_caracter(caracter):
-
+def normalizar_mensaje(mensaje):
+    #recibe un mensaje y convierte las vocales tildadas en vocales sin tildar y las "ñ" en "ni", el resto de caracteres los deja igual
     
     vocales_tildadas = ['á', 'é', 'í', 'ó', 'ú','Á','É','Í','Ó','Ú']
     vocales_sin_tildar = ['a', 'e', 'i', 'o', 'u','A','E','I','O','U']
-
-    if caracter in vocales_tildadas:
-            indice = vocales_tildadas.index(caracter)
-            nueva_letra = vocales_sin_tildar[indice]
-            caracter_a_analizar = nueva_letra
-    else:
-        caracter_a_analizar = caracter
     
-    return caracter_a_analizar
+    mensaje_a_analizar=""
+    
+    for caracter in mensaje:
+        if caracter == "ñ":
+            nuevo_caracter = "ni"
+        elif caracter == "Ñ":
+            nuevo_caracter = "NI"
+        elif caracter in vocales_tildadas:
+                indice = vocales_tildadas.index(caracter)
+                nuevo_caracter = vocales_sin_tildar[indice]
+        else:
+            nuevo_caracter = caracter
+        mensaje_a_analizar += nuevo_caracter
+        
+    return mensaje_a_analizar
 
 
 
@@ -22,6 +29,8 @@ def cifrado_cesar(mensaje, clave):
 
     # recibe un mensaje , en caso de ser una letra o numero se "desplaza" una cantidad de veces a la derecha definido por el valor de clave,
     # en caso de ser un simbolo o espacio lo deja igual. para descifrar el mensaje se introduce una clave negativa
+    
+    #funcion hecha por Conde Brian Agustin
 
     """
     >>> cifrado_cesar("holaaBa##12",3)
@@ -59,12 +68,11 @@ def cifrado_cesar(mensaje, clave):
     LONGITUD_NUMEROS = 10
 
     mensaje_cifrado=""
-
-    for caracter in mensaje:
-
-        caracter_a_analizar = normalizar_caracter(caracter)
-
-        if caracter_a_analizar.isalpha() and caracter_a_analizar != "ñ" and caracter_a_analizar != "Ñ":
+    
+    mensaje_a_analizar = normalizar_mensaje(mensaje)
+    for caracter in mensaje_a_analizar:
+        
+        if caracter_a_analizar.isalpha():
 
             if caracter_a_analizar.islower():  
                 nuevo_caracter = chr(ord("a") + ((ord(caracter_a_analizar)- ord("a")+clave) % LONGITUD_ALFABETO))  

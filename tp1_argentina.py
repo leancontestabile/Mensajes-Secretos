@@ -88,7 +88,7 @@ def cifrado_cesar(mensaje, clave):
 
 #Funciones para integrar el Objetivo 1 con la interfaz gráfica del Objetivo 3.
 
-def boton_cifrado_cesar(inputMensaje, inputClave, cifrado, resultado_text):
+def boton_cifrado_cesar(inputMensaje, inputClave, resultado_text):
     """
     La función recibe 3 parámetros que son variables contenidas en la interfaz gráfica, a las dos primeras se les aplica el método get() 
     para conseguir la información de los cuadros de texto (Entry), y luego se invoca a la función del objetivo 1 para cifrar el mensaje ingresado 
@@ -99,10 +99,9 @@ def boton_cifrado_cesar(inputMensaje, inputClave, cifrado, resultado_text):
     mensaje = inputMensaje.get()
     clave = int(inputClave.get())
     mensaje_cifrado = cifrado_cesar(mensaje, clave)
-    cifrado.config(text=mensaje_cifrado)
     mostrar_resultado(resultado_text, "Texto cifrado (Cesar):", mensaje_cifrado)
 
-def boton_descifrado_cesar(inputMensaje, inputClave, descifrado, resultado_text):
+def boton_descifrado_cesar(inputMensaje, inputClave, resultado_text):
     """
     Lo mismo que la función del botón de cifrado, solamente que ahora se utiliza la clave negativa, para descifrar en vez de cifrar.
     
@@ -111,7 +110,6 @@ def boton_descifrado_cesar(inputMensaje, inputClave, descifrado, resultado_text)
     mensaje = inputMensaje.get()
     clave = int(inputClave.get())
     mensaje_descifrado = cifrado_cesar(mensaje, -clave)
-    descifrado.config(text=mensaje_descifrado)
     mostrar_resultado(resultado_text, "Texto descifrado (Cesar):", mensaje_descifrado)
 
 # objetivo 2: cifrado atbash
@@ -249,10 +247,10 @@ def interfazContinuar():
     frameBotones = Frame(raiz, bg="#9ED8F9")
     frameBotones.pack(pady=15)
     
-    botonCifrarCesar = Button(frameBotones,text="Cifrar César", bg="#D5CF13", command=lambda: boton_cifrado_cesar(inputMensaje, resultado_text))
+    botonCifrarCesar = Button(frameBotones,text="Cifrar César", bg="#D5CF13", command=lambda: boton_cifrado_cesar(inputMensaje,inputClave, resultado_text))
     botonCifrarCesar.grid(row=0,column=0, padx=5)
     
-    botonDescifrarCesar = Button(frameBotones,text="Descifrar César",bg="#D5CF13", command=lambda: boton_descifrado_cesar(inputMensaje, resultado_text))
+    botonDescifrarCesar = Button(frameBotones,text="Descifrar César",bg="#D5CF13", command=lambda: boton_descifrado_cesar(inputMensaje,inputClave, resultado_text))
     botonDescifrarCesar.grid(row=0,column=1, padx=5)
     
     resultado_text = Text(miFrame, font=('Courier', 12), bg="white", height=5, width=40, state=DISABLED)

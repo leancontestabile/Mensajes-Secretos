@@ -9,13 +9,15 @@ def consultar_mensajes(id_usuario):
                     mensaje_descifrado = cifrado_atbash(mensaje_cifrado)
                     print(emisor,":", mensaje_descifrado)
                 else:
-                    print(emisor,":", mensaje_cifrado)
+                    mensaje_descifrado = cifrado_cesar(mensaje_cifrado, -int(cifrado[1]))
+                    print(emisor,":", mensaje_descifrado)
                 total_mensajes += 1
             elif (receptor == "*") and (emisor != id_usuario):
                 if (cifrado == "A"):
                     mensaje_descifrado = cifrado_atbash(mensaje_cifrado)
                     print("#",emisor,":", mensaje_descifrado)
                 else:
-                    print("#",emisor,":", mensaje_cifrado)
+                    mensaje_descifrado = cifrado_cesar(mensaje_cifrado, -int(cifrado[1]))
+                    print("#",emisor,":", mensaje_descifrado)
                 total_mensajes += 1
     print("Total de mensajes:", total_mensajes)

@@ -1,5 +1,26 @@
 from tkinter import *
 
+
+def boton_ingreso(input_usuario, input_clave):
+    usuario = input_usuario.get()
+    clave = input_clave.get()
+    archivo = open("usuario_clave.csv")
+
+    usuario_archivo,clave_archivo,id_pregunta_seguridad_archivo,respuesta_archivo,intentos = leer_usuario(archivo)
+
+    encontrado = False
+
+    while usuario_archivo != "" and not encontrado:
+
+        if usuario == usuario_archivo:
+            if clave == clave_archivo:
+                encontrado = True
+
+        usuario_archivo,clave_archivo,id_pregunta_seguridad_archivo,respuesta_archivo,intentos = leer_usuario(archivo)
+
+    if encontrado:
+        interfaz_mensajes()
+
 def interfaz_login():
     raiz_login = Tk()
     raiz_login.title("Inicio de sesion")

@@ -5,8 +5,8 @@ from tkinter import *
 def interfazInicial():
     raiz = Tk()
     raiz.title('TP Grupal Parte 1 - Grupo: Argentina') 
-    raiz.resizable(0,0)
-    raiz.geometry("750x500")
+    raiz.resizable(True, True)
+    raiz.geometry("1024x768")
     raiz.iconbitmap("argentina.ico")
     raiz.config(bg="#9ED8F9")
 
@@ -33,8 +33,8 @@ def interfazCrearUsuario():
     """ Brian Conde, Matias Gonzalez"""
     raiz = Tk()
     raiz.title('Crear Usuario') 
-    raiz.resizable(0,0)
-    raiz.geometry("750x500")
+    raiz.resizable(True, True)
+    raiz.geometry("1024x768")
     raiz.iconbitmap("argentina.ico")
     raiz.config(bg="#9ED8F9")
 
@@ -70,8 +70,8 @@ def interfazIngresoUsuario():
     """ Brian Conde, Matias Gonzalez"""
     raiz = Tk()
     raiz.title('Ingreso Usuario') 
-    raiz.resizable(0,0)
-    raiz.geometry("750x500")
+    raiz.resizable(True, True)
+    raiz.geometry("1024x768")
     raiz.iconbitmap("argentina.ico")
     raiz.config(bg="#9ED8F9")
 

@@ -53,9 +53,3 @@ def cifrado_atbash(cadena):
             lista_caracteres.append(letra)
     nueva_cadena = "".join(lista_caracteres)
     return nueva_cadena
-
-def main():
-    import doctest
-    print(doctest.testmod())
-
-main()

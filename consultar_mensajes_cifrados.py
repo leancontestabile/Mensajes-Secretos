@@ -1,9 +1,19 @@
 def consultar_mensajes(id_usuario):
-#     implementacion funciones y agregar docstring
+
+    """
+
+    Recibe una cadena por parametro, devuelve una lista y un entero
+
+    El objetivo es abrir el archivo, verificar en el mismo los mensajes que son para el y guardarlos
+
+    Contestabile Leandro Ezequiel
+
+    """
+
     mensajes_generales = []
     mensajes_personales = []
     total_mensajes = 0
-    print("Lista de mensajes:")
+
     with open("prueba_mensajes.csv", "r") as ar_mensajes:
         for linea in ar_mensajes:
             emisor, receptor, cifrado, mensaje_cifrado = linea.rstrip("\n").split(",")
@@ -27,8 +37,7 @@ def consultar_mensajes(id_usuario):
                     aux_mensaje = "#" + emisor +": " + mensaje_descifrado
                     mensajes_generales.append(aux_mensaje)
                 total_mensajes += 1
-    for i in mensajes_generales:
-        print(i)
-    for i in mensajes_personales:
-        print(i)
-    print("Total de mensajes:", total_mensajes)
+
+    mensajes_usuario = mensajes_generales + mensajes_personales
+
+    return mensajes_usuario, total_mensajes

@@ -220,20 +220,22 @@ def recuperar_contraseña(usuario,id_pregunta,respuesta_pregunta):
                             archivo_usuarios.close()
                             terminar = True
                             exitoso = True
+                            
                         else:
                             archivo_usuarios.close()
                             intentos_actualizado = str(int(intentos)+1)
                             actualizar_intentos(usuario,intentos_actualizado)                    
                     else:
                         messagebox.showerror("error","Usuario bloqueado")
-                        archivo_usuarios.close()
+                        archivo_usuarios.close() 
                         terminar = True   
                         exitoso = False
             else:
                 usuario_archivo,clave_archivo,id_pregunta_seguridad_archivo,respuesta_archivo,intentos = leer_usuario(archivo_usuarios)
                 if usuario_archivo == "":
                     messagebox.showerror("error","Usuario no encontrado")
-                    archivo_usuarios.close()  
+                    archivo_usuarios.close()
+
     return terminar,exitoso
 
             
@@ -395,6 +397,7 @@ def boton_recuperar_contraseña(raiz,input_usuario,combo_var,input_respuesta):
     respuesta = input_respuesta.get()
 
     terminar,exitoso = recuperar_contraseña(usuario,id_pregunta_seguridad,respuesta)
+
     if terminar:
         raiz.destroy()
         if exitoso:

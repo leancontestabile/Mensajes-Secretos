@@ -202,6 +202,8 @@ def recuperar_contraseña(usuario,id_pregunta,respuesta_pregunta):
 
     INTENTOS_MAXIMOS = 3
     encontrado = False
+    terminar = False
+    exitoso = False
 
     archivo_usuarios = open("usuario_clave.csv")
     usuario_archivo,clave_archivo,id_pregunta_seguridad_archivo,respuesta_archivo,intentos = leer_usuario(archivo_usuarios)
@@ -216,21 +218,23 @@ def recuperar_contraseña(usuario,id_pregunta,respuesta_pregunta):
                         if respuesta_pregunta == respuesta_archivo:
                             messagebox.showinfo("completado",f"usuario:{usuario_archivo} clave:{clave_archivo}")
                             archivo_usuarios.close()
+                            terminar = True
+                            exitoso = True
                         else:
                             archivo_usuarios.close()
                             intentos_actualizado = str(int(intentos)+1)
                             actualizar_intentos(usuario,intentos_actualizado)                    
                     else:
                         messagebox.showerror("error","Usuario bloqueado")
-                        archivo_usuarios.close()    
-                """elif usuario_archivo == "":
-                messagebox.showerror("error","Usuario no encontrado")
-                archivo_usuarios.close()   """
+                        archivo_usuarios.close()
+                        terminar = True   
+                        exitoso = False
             else:
                 usuario_archivo,clave_archivo,id_pregunta_seguridad_archivo,respuesta_archivo,intentos = leer_usuario(archivo_usuarios)
                 if usuario_archivo == "":
                     messagebox.showerror("error","Usuario no encontrado")
                     archivo_usuarios.close()  
+    return terminar,exitoso
 
             
 
@@ -385,13 +389,18 @@ def boton_recuperacion_contraseña(raiz):
     interfaz_recuperacion_contraseña(lista_preguntas)
 
 
-def boton_recuperar_contraseña(input_usuario,combo_var,input_respuesta):
+def boton_recuperar_contraseña(raiz,input_usuario,combo_var,input_respuesta):
     usuario = input_usuario.get()
     id_pregunta_seguridad = combo_var.get().split("-")[0]
     respuesta = input_respuesta.get()
 
-    recuperar_contraseña(usuario,id_pregunta_seguridad,respuesta)
-
+    terminar,exitoso = recuperar_contraseña(usuario,id_pregunta_seguridad,respuesta)
+    if terminar:
+        raiz.destroy()
+        if exitoso:
+            interfaz_login()
+        else:
+            interfaz_inicial()
 
 def boton_ingresar_registro(raiz,input_usuario,input_contraseña,combo_var,input_respuesta):
 
@@ -616,7 +625,7 @@ def interfaz_recuperacion_contraseña(lista_preguntas):
     frame_botones = Frame(raiz, bg="#9ED8F9")
     frame_botones.pack(pady=15)
 
-    boton_recuperar = Button(frame_botones,text="recuperar",bg="#D5CF13", command=lambda: boton_recuperar_contraseña(input_usuario,combo_var,input_respuesta))
+    boton_recuperar = Button(frame_botones,text="recuperar",bg="#D5CF13", command=lambda: boton_recuperar_contraseña(raiz,input_usuario,combo_var,input_respuesta))
     boton_recuperar.grid(row=0,column=1, padx=5)
 
 

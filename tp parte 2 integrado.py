@@ -136,13 +136,16 @@ def crear_usuario(usuario,clave,id_pregunta_seguridad, respuesta):
                     messagebox.showinfo("completado","Identificador guardado")
                 elif not usuario_insertado and usuario_existente:
                     messagebox.showwarning("error","Identificador en uso")
+                    
+        archivo_usuarios.close()
+        nuevo_archivo_usuarios.close()
+        remove("usuario_clave.csv")
+        rename("nuevo_usuario_clave.csv","usuario_clave.csv")
+    
     elif not usuario_valido or not clave_valida:
         messagebox.showwarning("eror","clave o usuario invalidos")
 
-    archivo_usuarios.close()
-    nuevo_archivo_usuarios.close()
-    remove("usuario_clave.csv")
-    rename("nuevo_usuario_clave.csv","usuario_clave.csv")
+    
 
     return usuario_insertado
 

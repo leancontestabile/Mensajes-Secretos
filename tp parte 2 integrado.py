@@ -129,13 +129,13 @@ def crear_usuario(usuario,clave,id_pregunta_seguridad, respuesta):
                 
             usuario_archivo,clave_archivo,id_pregunta_seguridad_archivo,respuesta_archivo,intentos = leer_usuario(archivo_usuarios)
             
-            if usuario_archivo == "":
-                if not usuario_existente and not usuario_insertado:
-                    usuario_insertado = True
-                    nuevo_archivo_usuarios.write(f"{usuario},{clave},{id_pregunta_seguridad},{respuesta},0\n")
-                    messagebox.showinfo("completado","Identificador guardado")
-                elif not usuario_insertado and usuario_existente:
-                    messagebox.showwarning("error","Identificador en uso")
+        if usuario_archivo == "":
+            if not usuario_existente and not usuario_insertado:
+                usuario_insertado = True
+                nuevo_archivo_usuarios.write(f"{usuario},{clave},{id_pregunta_seguridad},{respuesta},0\n")
+                messagebox.showinfo("completado","Identificador guardado")
+            elif not usuario_insertado and usuario_existente:
+                messagebox.showwarning("error","Identificador en uso")
                     
         archivo_usuarios.close()
         nuevo_archivo_usuarios.close()

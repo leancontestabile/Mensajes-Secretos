@@ -1,5 +1,5 @@
 # Todos los objetivos integrados en un solo archivo para el segundo video.
-
+import csv
 import doctest
 from os import remove
 from os import rename
@@ -152,7 +152,7 @@ def crear_usuario(usuario,clave,id_pregunta_seguridad, respuesta):
         
 
                 
-def comprobar_usuario_clave_correctos(usuario,clave):
+def comprobar_usuario_clave_correctos(usuario,clave): 
 
     archivo = open("usuario_clave.csv")
     usuario_archivo,clave_archivo,id_pregunta_seguridad_archivo,respuesta_archivo,intentos = leer_usuario(archivo)
@@ -483,9 +483,6 @@ def main():
 
 main()
 
-# objetivo 3: interfaz grafica de usuario
-
-
 mensaje_cifrado_global = "" #Variable global
 
 def boton_interfaz_login(raiz):
@@ -496,8 +493,8 @@ def boton_interfaz_login(raiz):
 def interfaz_inicial():
     raiz = Tk()
     raiz.title('TP Grupal Parte 1 - Grupo: Argentina') 
-    raiz.resizable(0,0)
-    raiz.geometry("900x600")
+    raiz.resizable(True, True)
+    raiz.geometry("1024x768")
     raiz.config(bg="#9ED8F9")
 
     mi_frame = Frame(raiz,bg="#9ED8F9")
@@ -521,8 +518,8 @@ def interfaz_inicial():
 def interfaz_login():
     raiz_login = Tk()
     raiz_login.title("Identificacion para acceso")
-    raiz_login.resizable(0,0)
-    raiz_login.geometry("750x500")
+    raiz_login.resizable(True, True)
+    raiz_login.geometry("1024x768")
     raiz_login.config(bg="#9ED8F9")
     frame_login = Frame(raiz_login,bg="#9ED8F9")
     frame_login.config(bd=10,relief="groove")
@@ -543,11 +540,11 @@ def interfaz_login():
     frame_botones = Frame(raiz_login, bg="#9ED8F9")
     frame_botones.pack(pady=15)
 
-    boton_ingresar = Button(frame_botones,text="Ingresar",bg="#D5CF13", command=lambda: boton_ingreso(raiz_login,input_usuario,input_contraseña))
+    boton_ingresar = Button(frame_botones,text="Ingresar",bg="#856ff8", bd=5, command=lambda: boton_ingreso(raiz_login,input_usuario,input_contraseña))
     boton_ingresar.grid(row=0,column=0, padx=5)
 
 
-    boton_recuperar = Button(frame_botones,text="Recuperar",bg="#D5CF13", command=lambda: boton_recuperacion_contraseña(raiz_login))
+    boton_recuperar = Button(frame_botones,text="Recuperar",bg="#856ff8", bd=5, command=lambda: boton_recuperacion_contraseña(raiz_login))
     boton_recuperar.grid(row=0,column=2, padx=5)
     
     
@@ -557,8 +554,8 @@ def interfaz_registro(lista_preguntas):
 
     raiz = Tk()
     raiz.title("Registro")
-    raiz.resizable(0,0)
-    raiz.geometry("750x500")
+    raiz.resizable(True, True)
+    raiz.geometry("1024x768")
     raiz.config(bg="#9ED8F9")
     frame_registro = Frame(raiz,bg="#9ED8F9")
     frame_registro.config(bd=10,relief="groove")
@@ -644,6 +641,11 @@ def cifrar(inputMensaje, resultado_text):
     mensaje_cifrado_global = mensaje_cifrado 
     mostrar_resultado(resultado_text, "Texto cifrado (Atbash):", mensaje_cifrado)
 
+def descifrar(inputMensaje, resultado_text):
+    """Matias Gonzalez"""
+    global mensaje_cifrado_global  
+    mensaje_descifrado = cifrar_atbash(mensaje_cifrado_global) 
+    mostrar_resultado(resultado_text, "Texto descifrado (Atbash):", mensaje_descifrado)
 
 def interfaz_mensajes():
     raiz = Tk()
@@ -663,7 +665,7 @@ def interfaz_mensajes():
     label_clave.grid(row=1,column=0,padx=5,pady=10)
     
     input_mensaje=Entry(mi_frame)
-    input_m# Todos los objetivos integrados en un solo archivo para el segundo video.
+    input_mensaje# Todos los objetivos integrados en un solo archivo para el segundo video.
 
 import doctest
 from os import remove
@@ -1168,8 +1170,9 @@ def boton_interfaz_login(raiz):
 def interfaz_inicial():
     raiz = Tk()
     raiz.title('TP Grupal Parte 1 - Grupo: Argentina') 
-    raiz.resizable(0,0)
-    raiz.geometry("900x600")
+    raiz.resizable(True, True)
+    raiz.geometry("1024x768")
+    raiz.iconbitmap("argentina.ico")
     raiz.config(bg="#9ED8F9")
 
     mi_frame = Frame(raiz,bg="#9ED8F9")
@@ -1179,13 +1182,13 @@ def interfaz_inicial():
     label_bienvenida = Label(mi_frame,font=('Courier',12),bg="#9ED8F9",text="Bienvenido a la aplicación de mensajes secretos del grupo Argentina. \n Para ingresar presione ingresar, para crear una nueva cuenta presione registrar")
     label_bienvenida.grid(row=0,column=0,padx=10,pady=10, columnspan=2)
 
-    boton_continuar = Button(mi_frame,text="Ingresar",bg="#D5CF13",command=lambda:boton_interfaz_login(raiz))
+    boton_continuar = Button(mi_frame,text="Ingresar",bg="#856ff8",command=lambda:boton_interfaz_login(raiz))
     boton_continuar.grid(row=1,column=0,pady=10,padx=(250, 5))
 
-    boton_registrar = Button(mi_frame,text="Registrar",bg="#D5CF13", command=lambda: boton_registro(raiz))
+    boton_registrar = Button(mi_frame,text="Registrar",bg="#856ff8", command=lambda: boton_registro(raiz))
     boton_registrar.grid(row=1,column=1, pady=10, padx=(5, 250))
 
-    label_integrantes = Label(mi_frame,font=('Courier',12),bg="#9ED8F9",text="Construída por:\n \n Tomás Ghiglione \n Nicolás Mutazzi \n Matías Gonzalez Vieyra \n Brian Agustín Conde \n Leandro Contestabile")
+    label_integrantes = Label(mi_frame,font=('Courier',12),bg="#9ED8F9",text="Construída por:\n \n Brian Agustín Conde \n Leandro Contestabile \n Matias Gonzalez Vieyra")
     label_integrantes.grid(row=2,column=0,pady=10,columnspan=2)
 
     raiz.mainloop()
@@ -1193,33 +1196,33 @@ def interfaz_inicial():
 def interfaz_login():
     raiz_login = Tk()
     raiz_login.title("Identificacion para acceso")
-    raiz_login.resizable(0,0)
-    raiz_login.geometry("750x500")
+    raiz_login.resizable(True, True)
+    raiz_login.geometry("1024x768")
     raiz_login.config(bg="#9ED8F9")
     frame_login = Frame(raiz_login,bg="#9ED8F9")
     frame_login.config(bd=10,relief="groove")
     frame_login.pack(pady=100)
 
-    label_usuario = Label(frame_login,font=('Courier',12),bg="#9ED8F9",text="Usuario:")
+    label_usuario = Label(frame_login,font=('Arial',12),bg="#9ED8F9",text="Usuario:")
     label_usuario.grid(row=0,column=0,padx=5,pady=10)
     
-    label_contraseña = Label(frame_login,font=('Courier',12),bg="#9ED8F9",text="Contraseña:")
+    label_contraseña = Label(frame_login,font=('Arial',12),bg="#9ED8F9",text="Contraseña:")
     label_contraseña.grid(row=1,column=0,padx=5,pady=10)
     
-    input_usuario=Entry(frame_login)
+    input_usuario=Entry(frame_login, bd=7)
     input_usuario.grid(row=0,column=1,padx=10)
     
-    input_contraseña=Entry(frame_login)
+    input_contraseña=Entry(frame_login, bd=7)
     input_contraseña.grid(row=1,column=1,padx=10)
 
     frame_botones = Frame(raiz_login, bg="#9ED8F9")
     frame_botones.pack(pady=15)
 
-    boton_ingresar = Button(frame_botones,text="Ingresar",bg="#D5CF13", command=lambda: boton_ingreso(raiz_login,input_usuario,input_contraseña))
+    boton_ingresar = Button(frame_botones,text="Ingresar",bg="#856ff8", bd=5, command=lambda: boton_ingreso(raiz_login,input_usuario,input_contraseña))
     boton_ingresar.grid(row=0,column=0, padx=5)
 
 
-    boton_recuperar = Button(frame_botones,text="Recuperar",bg="#D5CF13", command=lambda: boton_recuperacion_contraseña(raiz_login))
+    boton_recuperar = Button(frame_botones,text="Recuperar",bg="#856ff8", bd=5, command=lambda: boton_recuperacion_contraseña(raiz_login))
     boton_recuperar.grid(row=0,column=2, padx=5)
     
     
@@ -1229,42 +1232,42 @@ def interfaz_registro(lista_preguntas):
 
     raiz = Tk()
     raiz.title("Registro")
-    raiz.resizable(0,0)
-    raiz.geometry("750x500")
+    raiz.resizable(True, True)
+    raiz.geometry("1024x768")
     raiz.config(bg="#9ED8F9")
     frame_registro = Frame(raiz,bg="#9ED8F9")
     frame_registro.config(bd=10,relief="groove")
     frame_registro.pack(pady=100)
 
-    label_usuario = Label(frame_registro,font=('Courier',12),bg="#9ED8F9",text="Usuario:")
+    label_usuario = Label(frame_registro,font=('Arial',12),bg="#9ED8F9",text="Usuario:")
     label_usuario.grid(row=0,column=0,padx=5,pady=10)
     
-    label_contraseña = Label(frame_registro,font=('Courier',12),bg="#9ED8F9",text="Contraseña:")
+    label_contraseña = Label(frame_registro,font=('Arial',12),bg="#9ED8F9",text="Contraseña:")
     label_contraseña.grid(row=1,column=0,padx=5,pady=10)
 
-    label_pregunta = Label(frame_registro,font=('Courier',12),bg="#9ED8F9",text="Pregunta de seguridad:")
+    label_pregunta = Label(frame_registro,font=('Arial',12),bg="#9ED8F9",text="Pregunta de seguridad:")
     label_pregunta.grid(row=2,column=0,padx=5,pady=10)
 
-    label_respuesta = Label(frame_registro,font=('Courier',12),bg="#9ED8F9",text="Respuesta:")
+    label_respuesta = Label(frame_registro,font=('Arial',12),bg="#9ED8F9",text="Respuesta:")
     label_respuesta.grid(row=3,column=0,padx=5,pady=10)
     
-    input_usuario=Entry(frame_registro)
+    input_usuario=Entry(frame_registro, bd=7)
     input_usuario.grid(row=0,column=1,padx=10)
     
-    input_contraseña=Entry(frame_registro)
+    input_contraseña=Entry(frame_registro, bd=7)
     input_contraseña.grid(row=1,column=1,padx=10)
 
     combo_var = tk.StringVar()
     combobox = ttk.Combobox(frame_registro, textvariable=combo_var,values=lista_preguntas)
     combobox.grid(row=2,column=1,padx=10)
 
-    input_respuesta=Entry(frame_registro)
+    input_respuesta=Entry(frame_registro, bd=7)
     input_respuesta.grid(row=3,column=1,padx=10)
 
     frame_botones = Frame(raiz, bg="#9ED8F9")
     frame_botones.pack(pady=15)
 
-    boton_ingresar = Button(frame_botones,text="Ingresar",bg="#D5CF13", command=lambda: boton_ingresar_registro(raiz,input_usuario,input_contraseña,combo_var,input_respuesta))
+    boton_ingresar = Button(frame_botones,text="Ingresar",bg="#856ff8", bd=5, command=lambda: boton_ingresar_registro(raiz,input_usuario,input_contraseña,combo_var,input_respuesta))
     boton_ingresar.grid(row=0,column=1, padx=5)
 
 
@@ -1319,46 +1322,92 @@ def cifrar(inputMensaje, resultado_text):
 
 def interfaz_mensajes():
     raiz = Tk()
-    raiz.title('TP Grupal Parte 1 - Grupo: Argentina') 
-    raiz.resizable(0,0)
-    raiz.geometry("750x500")
+    raiz.title('Cifrado y envío de mensajes') 
+    raiz.resizable(True, True)
+    raiz.geometry("1024x768")
+    raiz.iconbitmap("argentina.ico")
     raiz.config(bg="#9ED8F9")
 
-    mi_frame = Frame(raiz,bg="#9ED8F9")
-    mi_frame.config(bd=10,relief="groove")
-    mi_frame.pack(pady=(100, 0))
+    miFrame = Frame(raiz, bg="#9ED8F9", bd=10, relief="groove")
+    miFrame.pack(pady=(100, 0))
 
-    label_mensaje = Label(mi_frame,font=('Courier',12),bg="#9ED8F9",text="Ingrese mensaje:")
-    label_mensaje.grid(row=0,column=0,padx=5,pady=10)
-    
-    label_clave = Label(mi_frame,font=('Courier',12),bg="#9ED8F9",text="Ingrese Clave en caso de César:")
-    label_clave.grid(row=1,column=0,padx=5,pady=10)
-    
-    input_mensaje=Entry(mi_frame)
-    input_mensaje.grid(row=0,column=1,padx=10)
-    
-    input_clave=Entry(mi_frame)
-    input_clave.grid(row=1,column=1,padx=10)
+    destinatarioMensaje = Label(miFrame, font=('Georgia', 12), bg="#618282", text="Ingrese un destinatario valido:")
+    destinatarioMensaje.grid(row=0, column=0, padx=5, pady=10)
 
-    frame_botones = Frame(raiz, bg="#9ED8F9")
-    frame_botones.pack(pady=15)
-    
-    boton_cifrar_cesar = Button(frame_botones,text="Cifrar César", bg="#D5CF13", command=lambda: boton_cifrado_cesar(input_mensaje,input_clave, resultado_text))
-    boton_cifrar_cesar.grid(row=0,column=0, padx=5)
-    
-    boton_descifrar_cesar = Button(frame_botones,text="Descifrar César",bg="#D5CF13", command=lambda: boton_descifrado_cesar(input_mensaje,input_clave, resultado_text))
-    boton_descifrar_cesar.grid(row=0,column=1, padx=5)
-    
-    resultado_text = Text(mi_frame, font=('Courier', 12), bg="white", height=5, width=40, state=DISABLED)
-    resultado_text.grid(row=2, column=0, padx=5, pady=10)
+    inputDestinatario = Entry(miFrame, bd=7)
+    inputDestinatario.grid(row=0, column=1, padx=10)
 
-    boton_cifrar_atbash = Button(frame_botones,text="Cifrar Atbash",bg="#D5CF13", command=lambda: cifrar(input_mensaje, resultado_text))
-    boton_cifrar_atbash.grid(row=0,column=2, padx=5)
-    
-    boton_descifrar_atbash = Button(frame_botones,text="Descifrar Atbash",bg="#D5CF13", command=lambda: cifrar(input_mensaje, resultado_text))
-    boton_descifrar_atbash.grid(row=0,column=3, padx=5)
+    TodosLosUsuarios = Label(miFrame, font=('Georgia', 12), bg="#618282", text="Ingrese * en el caso de ser destinado a todos los usuarios.")
+    TodosLosUsuarios.grid(row=0, column=2, padx=5, pady=10)
+
+    labelMensaje = Label(miFrame, font=('Courier', 12), bg="#9ED8F9", text="Ingrese mensaje:")
+    labelMensaje.grid(row=1, column=0, padx=5, pady=10)
+
+    labelClave = Label(miFrame, font=('Courier', 12), bg="#9ED8F9", text="Ingrese Clave en caso de César:")
+    labelClave.grid(row=2, column=0, padx=5, pady=10)
+
+    inputMensaje = Entry(miFrame, bd=7)
+    inputMensaje.grid(row=1, column=1, padx=10)
+
+    inputClave = Entry(miFrame, bd=7)
+    inputClave.grid(row=2, column=1, padx=10)
+
+    frameBotones = Frame(raiz, bg="#9ED8F9")
+    frameBotones.pack(pady=15)
+
+    # Botones de cifrado Cesar
+    botonCifrarCesar = Button(frameBotones, text="Cifrar César", bg="#856ff8", bd=2, command=lambda: boton_cifrado_cesar(inputMensaje, inputClave, resultado_text))
+    botonCifrarCesar.grid(row=0, column=0, padx=5)
+
+    botonDescifrarCesar = Button(frameBotones, text="Descifrar César", bg="#856ff8", bd=2, command=lambda: boton_descifrado_cesar(inputMensaje, inputClave, resultado_text))
+    botonDescifrarCesar.grid(row=0, column=1, padx=5)
+
+    # Botones de cifrado Atbash
+    botonCifrarAtbash = Button(frameBotones, text="Cifrar Atbash", bg="#856ff8", bd=2, command=lambda: cifrar(inputMensaje, resultado_text))
+    botonCifrarAtbash.grid(row=0, column=2, padx=5)
+
+    botonDescifrarAtbash = Button(frameBotones, text="Descifrar Atbash", bg="#856ff8", bd=2, command=lambda: descifrar(inputMensaje, resultado_text))
+    botonDescifrarAtbash.grid(row=0, column=3, padx=5)
+
+    # Botones de envio
+    botonEnviarCesar = Button(frameBotones, text="Enviar mensaje cifrado Cesar", bg="#856ff8", bd=5, command=lambda: enviar_mensaje('C', inputDestinatario, inputMensaje, inputClave))
+    botonEnviarCesar.grid(row=0, column=4, padx=5)
+
+    botonEnviarAtbash = Button(frameBotones, text="Enviar mensaje cifrado Atbash", bg="#856ff8", bd=5, command=lambda: enviar_mensaje('A', inputDestinatario, inputMensaje, None))
+    botonEnviarAtbash.grid(row=0, column=5, padx=5)
+
+    resultado_text = Text(miFrame, font=('Courier', 12), bg="white", height=5, width=40, state=DISABLED)
+    resultado_text.grid(row=3, column=0, columnspan=3, padx=5, pady=10)
 
     raiz.mainloop()
+
+
+def enviar_mensaje(cifrado, destinatario, mensaje, clave):
+    """ 
+    Matias Gonzalez
+    """
+    destinatario = destinatario.get()
+    mensaje_original = mensaje.get()
+    clave = clave.get() if clave else None
+
+    if cifrado == 'C':
+        mensaje_cifrado = cifrado_cesar(mensaje_original, int(clave))
+    elif cifrado == 'A':
+        mensaje_cifrado = cifrado_atbash(mensaje_original)
+    else:
+        print("Tipo de cifrado no valido")
+        return
+
+    with open('mensajes.csv', 'a', newline='', encoding='utf-8') as file:
+        writer = csv.writer(file)
+        if cifrado == 'C':
+            writer.writerow([cifrado, destinatario, mensaje_original, mensaje_cifrado, clave])
+        elif cifrado == 'A':
+            writer.writerow([cifrado, destinatario, mensaje_original, mensaje_cifrado, clave])
+
+    print(f"Mensaje cifrado ({cifrado}) guardado en mensajes.csv")
+
+
 
 def mostrar_resultado(texto_cuadro, titulo, texto):
     """ Muestra los mensajes cifrados y descifrados en un cuadro.

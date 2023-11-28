@@ -103,16 +103,15 @@ def crear_usuario(usuario,clave,id_pregunta_seguridad, respuesta):
     usuario_valido = validar_usuario(usuario)
     clave_valida = validar_clave(clave)
     
-
+    usuario_existente = False
+    usuario_insertado = False
+    
     if usuario_valido and clave_valida:
 
         archivo_usuarios=open("usuario_clave.csv") 
         nuevo_archivo_usuarios =open("nuevo_usuario_clave.csv","w")
 
         usuario_archivo,clave_archivo,id_pregunta_seguridad_archivo,respuesta_archivo,intentos = leer_usuario(archivo_usuarios)
-
-        usuario_existente = False
-        usuario_insertado = False
 
         while usuario_archivo != "":
 
@@ -137,6 +136,8 @@ def crear_usuario(usuario,clave,id_pregunta_seguridad, respuesta):
                     messagebox.showinfo("completado","Identificador guardado")
                 elif not usuario_insertado and usuario_existente:
                     messagebox.showwarning("error","Identificador en uso")
+    elif not usuario_valido or not clave_valida:
+        messagebox.showwarning("eror","clave o usuario invalidos")
 
         archivo_usuarios.close()
         nuevo_archivo_usuarios.close()

@@ -140,12 +140,8 @@ def crear_usuario(usuario,clave,id_pregunta_seguridad, respuesta):
     elif not usuario_valido or not clave_valida:
         messagebox.showwarning("eror","clave o usuario invalidos")
 
-    
-
     return usuario_insertado
-
-    
-                
+        
 def comprobar_usuario_clave_correctos(usuario,clave): 
 
     archivo = open("usuario_clave.csv")
@@ -626,168 +622,10 @@ def interfaz_mensajes(id_usuario):
     label_clave.grid(row=1,column=0,padx=5,pady=10)
     
     input_mensaje=Entry(mi_frame)
-    input_mensaje# Todos los objetivos integrados en un solo archivo para el segundo video.
-
-def verificar_longitud(minimo,maximo,longitud):
-
-    if minimo <= longitud <= maximo:
-        longitud_valida = True
-    else:
-        longitud_valida = False
-    return longitud_valida
-
-def validar_usuario(usuario):
-    caracteres_validos = ["_","-","."]
-    LONGITUD_MINIMA = 5
-    LONGITUD_MAXIMA = 15
-    usuario_valido = True
-    longitud_usuario = len(usuario)
-
-    longitud_valida = verificar_longitud(LONGITUD_MINIMA,LONGITUD_MAXIMA,longitud_usuario)
-
-    if longitud_valida: 
-        i = 0
-        while usuario_valido and i < longitud_usuario:
-            if usuario[i].isalnum():
-                pass
-            elif usuario[i] in caracteres_validos:
-                pass
-            else:
-                usuario_valido = False
-            i+=1
-    
-    return usuario_valido
-
-def validar_clave(clave):
-
-    caracteres_pedidos = ["-","#","*"]
-
-    LONGITUD_MINIMA = 4
-    LONGITUD_MAXIMA = 8
-
-    longitud_clave = len(clave)
-
-    tiene_mayuscula = False
-    tiene_minuscula = False
-    tiene_numero = False
-    tiene_caracter_pedido = False
-    adyacente = False
-
-    longitud_valida = verificar_longitud(LONGITUD_MINIMA,LONGITUD_MAXIMA,longitud_clave)
-    
-    if longitud_valida:
-        i=0
-        caracter_anterior = ""
-        while not adyacente and i < longitud_clave:
-            if clave[i] == caracter_anterior:
-                adyacente = True
-            elif clave[i].isalpha():
-                if clave[i].islower():
-                    tiene_minuscula = True
-                else:
-                    tiene_mayuscula = True
-            elif clave[i].isnumeric():
-                tiene_numero = True
-            elif clave[i] in caracteres_pedidos:
-                tiene_caracter_pedido = True
-            caracter_anterior = clave[i]
-            i+=1
-        
-    return tiene_mayuscula and tiene_minuscula and tiene_numero and tiene_caracter_pedido and not adyacente
-
-def leer_usuario(archivo):
-    linea = archivo.readline()
-
-    if linea:   
-        devolver = linea.rstrip("\n").split(",")
-    else:
-        devolver = "","","","",""
-
-    return devolver
-
-def leer_preguntas(archivo):
-    linea = archivo.readline()
-
-    if linea:
-        devolver = linea.rstrip("\n").split(",")
-    else:
-        devolver = "",""
-    return devolver
+    input_mensaje
 
 
-def crear_usuario(usuario,clave,id_pregunta_seguridad, respuesta):
 
-    usuario_valido = validar_usuario(usuario)
-    clave_valida = validar_clave(clave)
-
-    
-    usuario_existente = False
-    usuario_insertado = False
-    
-    if usuario_valido and clave_valida:
-
-        archivo_usuarios=open("usuario_clave.csv") 
-        nuevo_archivo_usuarios =open("nuevo_usuario_clave.csv","w")
-
-        usuario_archivo,clave_archivo,id_pregunta_seguridad_archivo,respuesta_archivo,intentos = leer_usuario(archivo_usuarios)
-
-        
-
-        while usuario_archivo != "":
-
-            if usuario_archivo == usuario:
-                usuario_existente = True
-                nuevo_archivo_usuarios.write(f"{usuario_archivo},{clave_archivo},{id_pregunta_seguridad_archivo},{respuesta_archivo},{intentos}\n")
-            elif usuario < usuario_archivo and not usuario_existente and not usuario_insertado:
-                usuario_insertado = True
-
-                nuevo_archivo_usuarios.write(f"{usuario},{clave},{id_pregunta_seguridad},{respuesta},0\n")
-                nuevo_archivo_usuarios.write(f"{usuario_archivo},{clave_archivo},{id_pregunta_seguridad_archivo},{respuesta_archivo},{intentos}\n")
-                messagebox.showinfo("completado","Identificador guardado")
-            else:
-                nuevo_archivo_usuarios.write(f"{usuario_archivo},{clave_archivo},{id_pregunta_seguridad_archivo},{respuesta_archivo},{intentos}\n")
-                
-            usuario_archivo,clave_archivo,id_pregunta_seguridad_archivo,respuesta_archivo,intentos = leer_usuario(archivo_usuarios)
-            
-        if usuario_archivo == "":
-            if not usuario_existente and not usuario_insertado:
-                usuario_insertado = True
-                nuevo_archivo_usuarios.write(f"{usuario},{clave},{id_pregunta_seguridad},{respuesta},0\n")
-                messagebox.showinfo("completado","Identificador guardado")
-            elif not usuario_insertado and usuario_existente:
-                messagebox.showwarning("error","Identificador en uso")
-        
-                    
-        archivo_usuarios.close()
-        nuevo_archivo_usuarios.close()
-        remove("usuario_clave.csv")
-        rename("nuevo_usuario_clave.csv","usuario_clave.csv")
-
-
-    elif not usuario_valido or not clave_valida:
-        messagebox.showwarning("eror","clave o usuario invalidos")
-
-    
-    return usuario_insertado
-
-        
-
-                
-def comprobar_usuario_clave_correctos(usuario,clave):
-
-    archivo = open("usuario_clave.csv")
-    usuario_archivo,clave_archivo,id_pregunta_seguridad_archivo,respuesta_archivo,intentos = leer_usuario(archivo)
-    encontrado = False
-
-    while usuario_archivo != "" and not encontrado:
-
-        if usuario == usuario_archivo:
-            if clave == clave_archivo:
-                encontrado = True
-
-        usuario_archivo,clave_archivo,id_pregunta_seguridad_archivo,respuesta_archivo,intentos = leer_usuario(archivo)
-        
-    return encontrado
 def comprobar_solo_usuario(usuario): 
     """Matias Gonzalez"""
     archivo = open("usuario_clave.csv")

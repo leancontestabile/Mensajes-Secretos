@@ -7,21 +7,43 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 
-def verificar_longitud(minimo,maximo,longitud):
-    if minimo <= longitud <= maximo:
-        longitud_valida = True
-    else:
-        longitud_valida = False
-    return longitud_valida
 
 def validar_usuario(usuario):
+    """ 
+    Brian Conde.
+    Verifica si el usuario ingresado cumple con ciertas condiciones (longitud valida, caracteres validos,  alfanumerico) y devuelve true o false.
+
+    >>> validar_usuario("juan_perez")
+    True
+    >>> validar_usuario("maria.23")
+    True
+    >>> validar_usuario("nombre@usuario")
+    False
+    >>> validar_usuario("corto")
+    True
+    >>> validar_usuario("usuario_largo_nombre")
+    False
+    >>> validar_usuario("usuario.nombre")
+    True
+    >>> validar_usuario("usuario-nombre")
+    True
+    >>> validar_usuario("usuario123")
+    True
+    >>> validar_usuario("usuario#nombre")
+    False
+    >>> validar_usuario("usuario_________")
+    False
+    >>> validar_usuario("usuario123456789012345")
+    False
+    """
+    
     caracteres_validos = ["_","-","."]
     LONGITUD_MINIMA = 5
     LONGITUD_MAXIMA = 15
     usuario_valido = True
     longitud_usuario = len(usuario)
 
-    longitud_valida = verificar_longitud(LONGITUD_MINIMA,LONGITUD_MAXIMA,longitud_usuario)
+    longitud_valida = LONGITUD_MINIMA <= longitud_usuario <= LONGITUD_MAXIMA
 
     if longitud_valida: 
         i = 0
@@ -33,11 +55,40 @@ def validar_usuario(usuario):
             else:
                 usuario_valido = False
             i+=1
+    else:
+        usuario_valido = False
     
     return usuario_valido
 
 def validar_clave(clave):
-
+    """
+    Brian Conde.
+    Verifica si la clave ingresada cumple con ciertas condiciones (longitud valida, caracteres pedidos,  tiene mayuscula, tiene minuscula, tiene numero, no tiene caracteres adyacentes repetidos) y devuelve true o false.
+    
+    >>> validar_clave("Clave#123")
+    True
+    >>> validar_clave("AbcdEfgh")
+    False
+    >>> validar_clave("clave123")
+    True
+    >>> validar_clave("Passw0rd")
+    False
+    >>> validar_clave("clave--#")
+    False
+    >>> validar_clave("Aa1#Aa1#")
+    True
+    >>> validar_clave("clave")
+    False
+    >>> validar_clave("ClaveSecreta")
+    False
+    >>> validar_clave("C*ontr@aseñ@")
+    False
+    >>> validar_clave("12--34")
+    False
+    >>> validar_clave("Clav3#")
+    True
+    
+    """
     caracteres_pedidos = ["-","#","*"]
 
     LONGITUD_MINIMA = 4
@@ -51,7 +102,7 @@ def validar_clave(clave):
     tiene_caracter_pedido = False
     adyacente = False
 
-    longitud_valida = verificar_longitud(LONGITUD_MINIMA,LONGITUD_MAXIMA,longitud_clave)
+    longitud_valida = LONGITUD_MINIMA <= longitud_clave <= LONGITUD_MAXIMA
     
     if longitud_valida:
         i=0
@@ -71,9 +122,13 @@ def validar_clave(clave):
             caracter_anterior = clave[i]
             i+=1
         
-    return tiene_mayuscula and tiene_minuscula and tiene_numero and tiene_caracter_pedido and not adyacente
+    return tiene_mayuscula and tiene_minuscula and tiene_numero and tiene_caracter_pedido and longitud_valida and not adyacente
 
 def leer_usuario(archivo):
+    """
+    Brian Conde.
+    Lee archivos .csv de 5 elementos por fila y devuelve los valores pertenecientes a una linea del mismo, en caso de haber terminado devuelve elementos vacios.
+    """
     linea = archivo.readline()
 
     if linea:   
@@ -84,6 +139,11 @@ def leer_usuario(archivo):
     return devolver
 
 def leer_preguntas(archivo):
+
+    """
+    Brian Conde.
+    Lee archivos .csv de 2 elementos por fila y devuelve los valores pertenecientes a una linea del mismo, en caso de haber terminado devuelve elementos vacios.
+    """
     linea = archivo.readline()
 
     if linea:
@@ -94,6 +154,12 @@ def leer_preguntas(archivo):
 
 
 def crear_usuario(usuario,clave,id_pregunta_seguridad, respuesta):
+
+    """
+    recibe un usuario, clave, id de pregunta y respuesta, si el usuario y la clave son validos y el usuario no esta en uso,los registra con 0 intentos de recuperacion en un archivo usuario_clave.csv de forma ordenada por nombre y da una alerta de exito,
+    si ya hay un usuario registrado con ese nombre da un aviso de que el usuario esta en uso, si el usuario o la clave no son validos da un aviso indicandolo.
+    
+    """
 
     usuario_valido = validar_usuario(usuario)
     clave_valida = validar_clave(clave)
@@ -144,6 +210,11 @@ def crear_usuario(usuario,clave,id_pregunta_seguridad, respuesta):
         
 def comprobar_usuario_clave_correctos(usuario,clave): 
 
+    """
+    Brian Conde.
+    recibe un usuario y una clave, busca en el archivo usuario_clave.csv si hay una coincidencia de usuario y clave con los datos ingresados y si es asi devuelve True, en caso contrario devuelve False
+    """
+
     archivo = open("usuario_clave.csv")
     usuario_archivo,clave_archivo,id_pregunta_seguridad_archivo,respuesta_archivo,intentos = leer_usuario(archivo)
     encontrado = False
@@ -160,6 +231,13 @@ def comprobar_usuario_clave_correctos(usuario,clave):
 
 
 def actualizar_intentos(usuario,intentos_actualizado):
+
+    """
+    Brian Conde
+
+    Actualiza los intentos de recuperacion de un usuario (perteneciente al archivo usuario_clave.csv) sustituyendo el ultimo valor de la linea correspondiente por intentos_actualizado.
+
+    """
 
     archivo_usuarios = open("usuario_clave.csv")
     nuevo_archivo_usuarios = open("nuevo_usuario_clave.csv","w")
@@ -189,6 +267,16 @@ def actualizar_intentos(usuario,intentos_actualizado):
 
 
 def recuperar_contraseña(usuario,id_pregunta,respuesta_pregunta):
+
+    """
+    Brian Conde.
+
+    recibe un usuario, id de pregunta y respuesta de pregunta. Recorre el archivo usuario_clave.csv, si no encuenta al usuario se informa mediante una alerta,
+    en caso de encontrar al usuario y que la pregunta coincida con la registrada, se verifica si llego a los intentos maximos,
+    en ese caso se informa mediante una alerta que la cuenta esta bloqueada, si los intentos de recuperacion son menores al maximo verifica si la respuesta coincide, de ser asi da una alerta con el usuario y contraseña,
+    si no coinciden aumenta los intentos de recuperacion en 1.
+    despues devuelve las variables terminar y exitoso
+    """
 
     INTENTOS_MAXIMOS = 3
     encontrado = False

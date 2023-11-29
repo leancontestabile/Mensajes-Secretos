@@ -838,7 +838,31 @@ def comprobar_usuario_clave_correctos(usuario,clave):
         usuario_archivo,clave_archivo,id_pregunta_seguridad_archivo,respuesta_archivo,intentos = leer_usuario(archivo)
         
     return encontrado
+def comprobar_solo_usuario(usuario): 
+    """Matias Gonzalez"""
+    archivo = open("usuario_clave.csv")
+    usuario_archivo,clave_archivo,id_pregunta_seguridad_archivo,respuesta_archivo,intentos = leer_usuario(archivo)
+    encontrado_id = False
 
+    while usuario_archivo != "" and not encontrado_id:
+
+        if usuario == usuario_archivo:
+            encontrado_id = True
+        
+
+        usuario_archivo,clave_archivo,id_pregunta_seguridad_archivo,respuesta_archivo,intentos = leer_usuario(archivo)
+        
+    return encontrado_id
+
+def botones_solo_usuario(raiz, inputDestinatario):
+    """Matias Gonzalez"""
+    usuario = inputDestinatario.get()
+
+    if comprobar_solo_usuario(usuario):
+        raiz.destroy()
+        interfaz_mensajes()
+    else:
+        messagebox.showwarning("Id no existente")
 
 def actualizar_intentos(usuario,intentos_actualizado):
 
@@ -1370,10 +1394,10 @@ def interfaz_mensajes():
     botonDescifrarAtbash.grid(row=0, column=3, padx=5)
 
     # Botones de envio
-    botonEnviarCesar = Button(frameBotones, text="Enviar mensaje cifrado Cesar", bg="#856ff8", bd=5, command=lambda: enviar_mensaje('C', inputDestinatario, inputMensaje, inputClave))
+    botonEnviarCesar = Button(frameBotones, text="Enviar mensaje cifrado Cesar", bg="#856ff8", bd=5, command=lambda: enviar_mensaje('C', inputDestinatario, inputMensaje, inputClave) if botones_solo_usuario(raiz, inputDestinatario) else None)
     botonEnviarCesar.grid(row=0, column=4, padx=5)
 
-    botonEnviarAtbash = Button(frameBotones, text="Enviar mensaje cifrado Atbash", bg="#856ff8", bd=5, command=lambda: enviar_mensaje('A', inputDestinatario, inputMensaje, None))
+    botonEnviarAtbash = Button(frameBotones, text="Enviar mensaje cifrado Atbash", bg="#856ff8", bd=5, command=lambda: enviar_mensaje('A', inputDestinatario, inputMensaje, None) if botones_solo_usuario(raiz, inputDestinatario) else None)
     botonEnviarAtbash.grid(row=0, column=5, padx=5)
 
     resultado_text = Text(miFrame, font=('Courier', 12), bg="white", height=5, width=40, state=DISABLED)

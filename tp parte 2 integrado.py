@@ -101,7 +101,7 @@ def validar_clave(clave):
     tiene_numero = False
     tiene_caracter_pedido = False
     adyacente = False
-
+    caracter_invalido = False
     longitud_valida = LONGITUD_MINIMA <= longitud_clave <= LONGITUD_MAXIMA
     
     if longitud_valida:
@@ -119,10 +119,12 @@ def validar_clave(clave):
                 tiene_numero = True
             elif clave[i] in caracteres_pedidos:
                 tiene_caracter_pedido = True
+            else:
+                caracter_invalido = True
             caracter_anterior = clave[i]
             i+=1
         
-    return tiene_mayuscula and tiene_minuscula and tiene_numero and tiene_caracter_pedido and longitud_valida and not adyacente
+    return tiene_mayuscula and tiene_minuscula and tiene_numero and tiene_caracter_pedido and longitud_valida and not caracter_invalido and not adyacente
 
 def leer_usuario(archivo):
     """

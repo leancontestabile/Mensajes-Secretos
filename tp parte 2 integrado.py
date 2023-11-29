@@ -1,18 +1,13 @@
-# Todos los objetivos integrados en un solo archivo para el segundo video.
 import csv
 import doctest
 from os import remove
 from os import rename
-
-
-
 from tkinter import *
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 
 def verificar_longitud(minimo,maximo,longitud):
-
     if minimo <= longitud <= maximo:
         longitud_valida = True
     else:
@@ -149,8 +144,7 @@ def crear_usuario(usuario,clave,id_pregunta_seguridad, respuesta):
 
     return usuario_insertado
 
-        
-
+    
                 
 def comprobar_usuario_clave_correctos(usuario,clave): 
 
@@ -361,7 +355,7 @@ def boton_ingreso(raiz,input_usuario, input_clave):
 
     if comprobar_usuario_clave_correctos(usuario,clave):
         raiz.destroy()
-        interfaz_mensajes()
+        interfaz_mensajes(usuario)
     else: 
         messagebox.showwarning("Identificador inexistente o clave errónea","Si no se encuentra registrado debe registrarse previamente o si olvidaste la clave presiona el botón recuperar clave")
         
@@ -477,11 +471,6 @@ def cifrado_atbash(cadena):
     nueva_cadena = "".join(lista_caracteres)
     
     return nueva_cadena
-
-def main():
-    print(doctest.testmod())
-
-main()
 
 mensaje_cifrado_global = "" #Variable global
 
@@ -647,7 +636,7 @@ def descifrar(inputMensaje, resultado_text):
     mensaje_descifrado = cifrar_atbash(mensaje_cifrado_global) 
     mostrar_resultado(resultado_text, "Texto descifrado (Atbash):", mensaje_descifrado)
 
-def interfaz_mensajes():
+def interfaz_mensajes(id_usuario):
     raiz = Tk()
     raiz.title('TP Grupal Parte 1 - Grupo: Argentina') 
     raiz.resizable(0,0)
@@ -666,17 +655,6 @@ def interfaz_mensajes():
     
     input_mensaje=Entry(mi_frame)
     input_mensaje# Todos los objetivos integrados en un solo archivo para el segundo video.
-
-import doctest
-from os import remove
-from os import rename
-
-
-
-from tkinter import *
-import tkinter as tk
-from tkinter import ttk
-from tkinter import messagebox
 
 def verificar_longitud(minimo,maximo,longitud):
 
@@ -860,7 +838,7 @@ def botones_solo_usuario(raiz, inputDestinatario):
 
     if comprobar_solo_usuario(usuario):
         raiz.destroy()
-        interfaz_mensajes()
+        interfaz_mensajes(usuario)
     else:
         messagebox.showwarning("Id no existente")
 
@@ -1057,7 +1035,7 @@ def boton_ingreso(raiz,input_usuario, input_clave):
 
     if comprobar_usuario_clave_correctos(usuario,clave):
         raiz.destroy()
-        interfaz_mensajes()
+        interfaz_mensajes(usuario)
     else: 
         messagebox.showwarning("Identificador inexistente o clave errónea","Si no se encuentra registrado debe registrarse previamente o si olvidaste la clave presiona el botón recuperar clave")
         
@@ -1175,11 +1153,6 @@ def cifrado_atbash(cadena):
     nueva_cadena = "".join(lista_caracteres)
     
     return nueva_cadena
-
-def main():
-    print(doctest.testmod())
-
-main()
 
 # objetivo 3: interfaz grafica de usuario
 
@@ -1330,8 +1303,6 @@ def interfaz_recuperacion_contraseña(lista_preguntas):
     boton_recuperar = Button(frame_botones,text="recuperar",bg="#D5CF13", command=lambda: boton_recuperar_contraseña(raiz,input_usuario,combo_var,input_respuesta))
     boton_recuperar.grid(row=0,column=1, padx=5)
 
-
-
 def cifrar_atbash(texto):
     texto_cifrado = cifrado_atbash(texto) 
     return texto_cifrado
@@ -1343,8 +1314,92 @@ def cifrar(inputMensaje, resultado_text):
     mensaje_cifrado_global = mensaje_cifrado 
     mostrar_resultado(resultado_text, "Texto cifrado (Atbash):", mensaje_cifrado)
 
+def consultar_mensajes(id_usuario):
 
-def interfaz_mensajes():
+    """
+
+    Recibe una cadena por parametro, devuelve una lista y un entero
+
+    El objetivo es abrir el archivo, verificar en el mismo los mensajes que son para el y guardarlos
+
+    Contestabile Leandro Ezequiel
+
+    """
+
+    mensajes_generales = []
+    mensajes_personales = []
+    total_mensajes = 0
+
+    with open("mensajes.csv", "r") as ar_mensajes:
+        for linea in ar_mensajes:
+            emisor, receptor, cifrado, mensaje_cifrado = linea.rstrip("\n").split(",")
+            if (receptor == id_usuario):
+                if (cifrado == "A"):
+                    mensaje_descifrado = cifrado_atbash(mensaje_cifrado)
+                    aux_mensaje = emisor +": " + mensaje_descifrado
+                    mensajes_personales.append(aux_mensaje)
+                else:
+                    mensaje_descifrado = cifrado_cesar(mensaje_cifrado, -int(cifrado[1]))
+                    aux_mensaje = emisor +": " + mensaje_descifrado
+                    mensajes_personales.append(aux_mensaje)
+                total_mensajes += 1
+            elif (receptor == "*") and (emisor != id_usuario):
+                if (cifrado == "A"):
+                    mensaje_descifrado = cifrado_atbash(mensaje_cifrado)
+                    aux_mensaje = "#" + emisor +": " + mensaje_descifrado
+                    mensajes_generales.append(aux_mensaje)
+                else:
+                    mensaje_descifrado = cifrado_cesar(mensaje_cifrado, -int(cifrado[1]))
+                    aux_mensaje = "#" + emisor +": " + mensaje_descifrado
+                    mensajes_generales.append(aux_mensaje)
+                total_mensajes += 1
+
+    mensajes_usuario = mensajes_generales + mensajes_personales
+
+    return mensajes_usuario, total_mensajes
+
+def interfazConsulta(mensajes, cantidad):
+
+    """
+
+    Recibe una lista y un entero, luego los muestra graficamente
+
+    El objetivo es crear una ventana que muestre la lista de mensajes recepcionada y la cantidad de los mismos
+
+    Contestabile Leandro Ezequiel
+
+    """
+
+    raiz = Tk()
+    raiz.title('TP Grupal Parte 2 - Grupo: Argentina') 
+    raiz.resizable(0, 0)
+    raiz.geometry("750x500")
+    raiz.iconbitmap("argentina.ico")
+    raiz.config(bg="#9ED8F9")
+
+    miFrame = Frame(raiz, bg="#9ED8F9")
+    miFrame.config(bd=10, relief="groove")
+    miFrame.pack(pady=100)
+
+    labelLista = Label(miFrame, font=('Courier', 12), bg="#9ED8F9", text="Lista de mensajes:")
+    labelLista.grid(row=0, column=0, padx=10, pady=10)
+
+    lista = Listbox(miFrame, width=50, height=10)
+    lista.grid(row=1, column=0, padx=10, pady=10)
+
+    for mensaje in mensajes:
+        lista.insert(END, mensaje)
+
+    labelTotal = Label(miFrame, font=('Courier', 12), bg="#9ED8F9", text=f"Total de mensajes: {cantidad}")
+    labelTotal.grid(row=2, column=0, padx=10, pady=10)
+
+    raiz.mainloop()
+    
+def boton_consulta(id_usuario):
+    mensajes, cantidad = consultar_mensajes(id_usuario)
+    interfazConsulta(mensajes, cantidad)
+
+def interfaz_mensajes(id_usuario):
     raiz = Tk()
     raiz.title('Cifrado y envío de mensajes') 
     raiz.resizable(True, True)
@@ -1399,12 +1454,15 @@ def interfaz_mensajes():
 
     botonEnviarAtbash = Button(frameBotones, text="Enviar mensaje cifrado Atbash", bg="#856ff8", bd=5, command=lambda: enviar_mensaje('A', inputDestinatario, inputMensaje, None) if botones_solo_usuario(raiz, inputDestinatario) else None)
     botonEnviarAtbash.grid(row=0, column=5, padx=5)
+    
+    #Boton de consulta de mensajes
+    botonConsultarMensajes = Button(frameBotones, text="Consultar mensajes recibidos", bg="#856ff8", bd=5, command=lambda: boton_consulta(id_usuario))
+    botonConsultarMensajes.grid(row=0, column=6, padx=5)
 
     resultado_text = Text(miFrame, font=('Courier', 12), bg="white", height=5, width=40, state=DISABLED)
     resultado_text.grid(row=3, column=0, columnspan=3, padx=5, pady=10)
 
     raiz.mainloop()
-
 
 def enviar_mensaje(cifrado, destinatario, mensaje, clave):
     """ 
@@ -1431,8 +1489,6 @@ def enviar_mensaje(cifrado, destinatario, mensaje, clave):
 
     print(f"Mensaje cifrado ({cifrado}) guardado en mensajes.csv")
 
-
-
 def mostrar_resultado(texto_cuadro, titulo, texto):
     """ Muestra los mensajes cifrados y descifrados en un cuadro.
         Matias Gonzalez.
@@ -1443,7 +1499,5 @@ def mostrar_resultado(texto_cuadro, titulo, texto):
     texto_cuadro.insert(INSERT, "\n")
     texto_cuadro.insert(INSERT, texto)
     texto_cuadro.config(state=DISABLED)
-
-
 
 interfaz_inicial()

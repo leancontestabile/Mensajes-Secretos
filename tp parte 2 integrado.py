@@ -694,27 +694,6 @@ def descifrar(inputMensaje, resultado_text):
     mensaje_descifrado = cifrar_atbash(mensaje_cifrado_global) 
     mostrar_resultado(resultado_text, "Texto descifrado (Atbash):", mensaje_descifrado)
 
-def interfaz_mensajes(id_usuario):
-    raiz = Tk()
-    raiz.title('TP Grupal Parte 1 - Grupo: Argentina') 
-    raiz.resizable(0,0)
-    raiz.geometry("750x500")
-    raiz.config(bg="#9ED8F9")
-
-    mi_frame = Frame(raiz,bg="#9ED8F9")
-    mi_frame.config(bd=10,relief="groove")
-    mi_frame.pack(pady=(100, 0))
-
-    label_mensaje = Label(mi_frame,font=('Courier',12),bg="#9ED8F9",text="Ingrese mensaje:")
-    label_mensaje.grid(row=0,column=0,padx=5,pady=10)
-    
-    label_clave = Label(mi_frame,font=('Courier',12),bg="#9ED8F9",text="Ingrese Clave en caso de César:")
-    label_clave.grid(row=1,column=0,padx=5,pady=10)
-    
-    input_mensaje=Entry(mi_frame)
-    input_mensaje
-
-
 
 def comprobar_solo_usuario(usuario): 
     """Matias Gonzalez"""

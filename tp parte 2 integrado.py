@@ -1266,10 +1266,10 @@ def interfaz_mensajes(id_usuario):
     botonDescifrarAtbash.grid(row=0, column=3, padx=5)
 
     # Botones de envio
-    botonEnviarCesar = Button(frameBotones, text="Enviar mensaje cifrado Cesar", bg="#856ff8", bd=5, command=lambda: enviar_mensaje('C', inputDestinatario, inputMensaje, inputClave))
+    botonEnviarCesar = Button(frameBotones, text="Enviar mensaje cifrado Cesar", bg="#856ff8", bd=5, command=lambda: enviar_mensaje('C', inputDestinatario, id_usuario, inputMensaje, inputClave))
     botonEnviarCesar.grid(row=0, column=4, padx=5)
 
-    botonEnviarAtbash = Button(frameBotones, text="Enviar mensaje cifrado Atbash", bg="#856ff8", bd=5, command=lambda: enviar_mensaje('A', inputDestinatario, inputMensaje, None))
+    botonEnviarAtbash = Button(frameBotones, text="Enviar mensaje cifrado Atbash", bg="#856ff8", bd=5, command=lambda: enviar_mensaje('A', inputDestinatario, id_usuario, inputMensaje, None))
     botonEnviarAtbash.grid(row=0, column=5, padx=5)
     
     #Boton de consulta de mensajes
@@ -1281,7 +1281,7 @@ def interfaz_mensajes(id_usuario):
 
     raiz.mainloop()
 
-def enviar_mensaje(cifrado, destinatario, mensaje, clave):
+def enviar_mensaje(cifrado, destinatario, remitente, mensaje, clave):
     """Matias Gonzalez"""
     destinatario = destinatario.get()
     mensaje_original = mensaje.get()
@@ -1294,21 +1294,22 @@ def enviar_mensaje(cifrado, destinatario, mensaje, clave):
             next(reader)  # Saltar la primera fila si contiene encabezados
             for row in reader:
                 usuario = row[0]  # Ajusta el indice según la posición de la columna de usuarios en el CSV
-                cifrar_y_guardar_mensaje(cifrado, usuario, mensaje_original, clave)
+                cifrar_y_guardar_mensaje(cifrado, usuario, mensaje_original, clave, remitente)
         
         print(f"Mensaje cifrado ({cifrado}) enviado a todos los usuarios y guardado en mensajes.csv")
     elif comprobar_solo_usuario(destinatario):
         # Enviar mensaje al destinatario específico
-        cifrar_y_guardar_mensaje(cifrado, destinatario, mensaje_original, clave)
+        cifrar_y_guardar_mensaje(cifrado, destinatario, mensaje_original, clave, remitente)
         
         print(f"Mensaje cifrado ({cifrado}) enviado a {destinatario} y guardado en mensajes.csv")
     else:
         messagebox.showwarning("Identificacion inexistente", "Identificacion inexistente")
 
-def cifrar_y_guardar_mensaje(cifrado, destinatario, mensaje_original, clave):
+def cifrar_y_guardar_mensaje(cifrado, destinatario, mensaje_original, clave, remitente):
     """Matias Gonzalez"""
     if cifrado == 'C':
         mensaje_cifrado = cifrado_cesar(mensaje_original, int(clave))
+        cifrado = 'C' + str(clave)
     elif cifrado == 'A':
         mensaje_cifrado = cifrado_atbash(mensaje_original)
     else:
@@ -1317,7 +1318,7 @@ def cifrar_y_guardar_mensaje(cifrado, destinatario, mensaje_original, clave):
 
     with open('mensajes.csv', 'a', newline='', encoding='utf-8') as file:
         writer = csv.writer(file)
-        writer.writerow([destinatario, cifrado, clave, mensaje_cifrado]) 
+        writer.writerow([destinatario, remitente, cifrado, mensaje_cifrado]) 
 
 
 def mostrar_resultado(texto_cuadro, titulo, texto):
@@ -1332,4 +1333,3 @@ def mostrar_resultado(texto_cuadro, titulo, texto):
     texto_cuadro.config(state=DISABLED)
 
 interfaz_inicial()
-

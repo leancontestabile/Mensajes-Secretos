@@ -1149,7 +1149,7 @@ def consultar_mensajes(id_usuario):
 
     with open("mensajes.csv", "r") as ar_mensajes:
         for linea in ar_mensajes:
-            emisor, receptor, cifrado, mensaje_cifrado = linea.rstrip("\n").split(",")
+            receptor, emisor, cifrado, mensaje_cifrado = linea.rstrip("\n").split(",")
             if (receptor == id_usuario):
                 if (cifrado == "A"):
                     mensaje_descifrado = cifrado_atbash(mensaje_cifrado)
@@ -1290,12 +1290,13 @@ def enviar_mensaje(cifrado, destinatario, remitente, mensaje, clave):
     if destinatario == '*':
         # Enviar mensaje a todos los usuarios existentes
         with open('usuario_clave.csv', 'r', newline='', encoding='utf-8') as user_file:
-            reader = csv.reader(user_file)
+            """reader = csv.reader(user_file)
             next(reader)  # Saltar la primera fila si contiene encabezados
             for row in reader:
                 usuario = row[0]  # Ajusta el indice según la posición de la columna de usuarios en el CSV
-                cifrar_y_guardar_mensaje(cifrado, usuario, mensaje_original, clave, remitente)
+                cifrar_y_guardar_mensaje(cifrado, usuario, mensaje_original, clave, remitente)"""
         
+        cifrar_y_guardar_mensaje(cifrado, "*", mensaje_original, clave, remitente)
         print(f"Mensaje cifrado ({cifrado}) enviado a todos los usuarios y guardado en mensajes.csv")
     elif comprobar_solo_usuario(destinatario):
         # Enviar mensaje al destinatario específico
